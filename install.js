@@ -43,6 +43,12 @@ const writeLicense = async () => {
     return Promise.resolve();
 };
 
+const cleanUp = () => {
+    fs.unlinkSync(`${__dirname}/install.js`);
+    fs.unlinkSync(`${__dirname}/readme.md`);
+    fs.writeFileSync(`${__dirname}/readme.md`, "");
+};
+
  (async() => {
      try{
          await writeProject();
@@ -51,7 +57,9 @@ const writeLicense = async () => {
          console.log('Install complete! Running `npm build`...');
 
          execSync('npm run build', {stdio:[0,1,2]});
-         fs.unlinkSync(`${__dirname}/install.js`);
+         
+         cleanUp();
+         
          console.log('Build Finished :D');
          process.exit(0);
      }catch(error){
