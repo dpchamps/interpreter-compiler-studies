@@ -19,16 +19,17 @@ const prompt = async (question, defaultAnswer = "") => {
         })
     });
 };
+ (async() => {
+     project.name = await prompt('Project Name');
+     project.version = await prompt('Version (0.0.1', '0.0.1');
+     project.author = await prompt('Author Name');
+     project.license = await prompt('License Type (MIT)', 'MIT');
 
-project.name = await prompt('Project Name');
-project.version = await prompt('Version (0.0.1', '0.0.1');
-project.author = await('Author Name');
-project.license = await('License Type (MIT)', 'MIT');
-
-console.log('Install complete! Running `npm build`...');
-execSync('npm build');
-fs.writeFileSync(`${__dirname}/package.json`, JSON.stringify(project, null, 1));
-fs.unlinkSync(`${__dirname}/install.js`);
+     console.log('Install complete! Running `npm build`...');
+     execSync('npm build');
+     fs.writeFileSync(`${__dirname}/package.json`, JSON.stringify(project, null, 1));
+     fs.unlinkSync(`${__dirname}/install.js`);
+})();
 
 
 

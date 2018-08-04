@@ -6,7 +6,7 @@
     "test": "test",
     "dev": " node build/server.js",
     "build": "NODE_ENV=production webpack --config build/webpack.config.js",
-    "postinstall" : "install.js"
+    "postinstall" : "node install.js"
   },
   "author": "",
   "license": "ISC",
