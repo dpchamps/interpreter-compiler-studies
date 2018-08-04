@@ -26,7 +26,7 @@ const prompt = async (question, defaultAnswer = "") => {
      project.license = await prompt('License Type (MIT)', 'MIT');
 
      console.log('Install complete! Running `npm build`...');
-     execSync('npm build');
+     execSync('npm run build');
      fs.writeFileSync(`${__dirname}/package.json`, JSON.stringify(project, null, 1));
      fs.unlinkSync(`${__dirname}/install.js`);
 })();
