@@ -34,7 +34,7 @@ const writeProject = async () => {
 
 const writeLicense = async () => {
     const licenseName = await prompt('Author this project is licensed under', '');
-    const copyrightLine = `Copyright (c) [${(new Date()).getFullYear()}] [${licenseName}]`;
+    const copyrightLine = `Copyright (c) ${(new Date()).getFullYear()} ${licenseName}`;
     const license = fs.readFileSync(`${__dirname}/license.md`, 'utf8').split("\n");
 
     license[2] = copyrightLine;
