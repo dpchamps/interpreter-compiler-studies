@@ -20,16 +20,23 @@ const prompt = async (question, defaultAnswer = "") => {
     });
 };
  (async() => {
-     project.name = await prompt('Project Name');
-     project.version = await prompt('Version (0.0.1)', '0.0.1');
-     project.author = await prompt('Author Name');
-     project.license = await prompt('License Type (MIT)', 'MIT');
+     try{
+         project.name = await prompt('Project Name');
+         project.version = await prompt('Version (0.0.1)', '0.0.1');
+         project.author = await prompt('Author Name');
+         project.license = await prompt('License Type (MIT)', 'MIT');
 
-     console.log('Install complete! Running `npm build`...');
-     execSync('npm run build', {stdio:[0,1,2]});
-     fs.writeFileSync(`${__dirname}/package.json`, JSON.stringify(project, null, 1));
-     fs.unlinkSync(`${__dirname}/install.js`);
-     console.log('Build Finished :D');
+         console.log('Install complete! Running `npm build`...');
+         execSync('npm run build', {stdio:[0,1,2]});
+         fs.writeFileSync(`${__dirname}/package.json`, JSON.stringify(project, null, 1));
+         fs.unlinkSync(`${__dirname}/install.js`);
+         console.log('Build Finished :D');
+         process.exit(0);
+     }catch(error){
+         console.log('There was an error in the postinstall script D:')
+         process.exit(1);
+     }
+     
 })();
 
 
