@@ -10,6 +10,13 @@ class Interpreter {
         this.currentToken = null;
     }
 
+    _isWhiteSpace(str){
+        return /\s/.exec(str) !== null;
+    }
+    _isNumber(str){
+        return !isNaN(Number(str));
+    }
+
     handleError(error) {
         log.ERROR(`Encoutered a fatal error: ${error.type || 'ERROR'}\n\t${error.message}`);
         throw error;
@@ -20,15 +27,32 @@ class Interpreter {
             return new Token(EOF);
         }
 
-        const currentChar = this.input[this.index];
+        let currentChar = this.input[this.index];
+
+        while(this._isWhiteSpace(currentChar)){
+            this.index += 1;
+            currentChar = this.input[this.index];
+        }
+
         let token;
 
-        if (!isNaN(Number(currentChar))) {
-            token = new Token(INTEGER, Number(currentChar));
+        if (this._isNumber(currentChar)) {
+            let stream = currentChar;
+            let nextChar = this.input[this.index + 1];
+            while(this._isNumber(nextChar)){
+                stream += nextChar;
+                this.index += 1;
+                nextChar = this.input[this.index + 1];
+            }
+            token = new Token(INTEGER, Number(stream));
         }
 
         if (currentChar === '+') {
             token = new Token(PLUS, '+');
+        }
+
+        if(currentChar === '-'){
+            token = new Token(MINUS, '-');
         }
 
         if (typeof token === 'undefined') {
@@ -45,12 +69,13 @@ class Interpreter {
         this.currentToken = this.getNextToken();
     }
 
-    verifyAndGetNextToken(tokenType) {
+    verifyAndGetNextToken(tokenType, ...validTokens) {
+        validTokens.push(tokenType);
         const previousToken = this.currentToken;
-        if (this.currentToken.type === tokenType) {
+        if (validTokens.includes(this.currentToken.type)) {
             this.step();
         } else {
-            this.handleError(new UnexpectedInput(`Recieved an unexpected token. Got: ${this.currentToken.type}, expected ${tokenType}`));
+            this.handleError(new UnexpectedInput(`Recieved an unexpected token. Got: ${this.currentToken.type}, expected ${validTokens.toString()}`));
         }
 
         return previousToken;
@@ -60,9 +85,16 @@ class Interpreter {
         this.step();
 
         const left = this.verifyAndGetNextToken(INTEGER);
-        const operator = this.verifyAndGetNextToken(PLUS);
+        const operator = this.verifyAndGetNextToken(PLUS, MINUS);
         const right = this.verifyAndGetNextToken(INTEGER);
-        const result = left.value + right.value;
+
+        let result;
+
+        if(operator.type === PLUS){
+            result = left.value + right.value;
+        }else{
+            result = left.value - right.value;
+        }
 
         return result
     }
