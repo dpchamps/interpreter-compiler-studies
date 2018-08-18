@@ -8,12 +8,14 @@ class Interpreter {
         this.input = input;
         this.index = 0;
         this.currentToken = null;
+        this.currentChar = this.input[this.index];
     }
 
-    _isWhiteSpace(str){
+    _isWhiteSpace(str) {
         return /\s/.exec(str) !== null;
     }
-    _isNumber(str){
+
+    _isNumber(str) {
         return !isNaN(Number(str));
     }
 
@@ -22,46 +24,58 @@ class Interpreter {
         throw error;
     }
 
-    getNextToken() {
+    advance() {
+        this.index += 1;
         if (this.index > this.input.length - 1) {
-            return new Token(EOF);
+            this.currentChar = null;
+        } else {
+            this.currentChar = this.input[this.index];
+        }
+    }
+
+    peek(){
+        return (this.index+1 < this.input.length-1) ? this.input[this.index+1] : null;
+    }
+
+    skipWhitespace() {
+        while (this._isWhiteSpace(this.currentChar)) {
+            this.advance();
+        }
+    }
+
+    getInteger() {
+        let buffer = '';
+        while (this.currentChar !== null && this._isNumber(this.peek())) {
+            buffer += this.currentChar;
+            this.advance();
         }
 
-        let currentChar = this.input[this.index];
+        return Number(buffer);
+    }
 
-        while(this._isWhiteSpace(currentChar)){
-            this.index += 1;
-            currentChar = this.input[this.index];
-        }
-
+    getNextToken() {
         let token;
 
-        if (this._isNumber(currentChar)) {
-            let stream = currentChar;
-            let nextChar = this.input[this.index + 1];
-            while(this._isNumber(nextChar)){
-                stream += nextChar;
-                this.index += 1;
-                nextChar = this.input[this.index + 1];
-            }
-            token = new Token(INTEGER, Number(stream));
-        }
+        this.skipWhitespace();
 
-        if (currentChar === '+') {
+        if (this._isNumber(this.currentChar)) {
+            token = new Token(INTEGER, this.getInteger());
+        }else if (this.currentChar === '+') {
             token = new Token(PLUS, '+');
+        }else if (this.currentChar === '-') {
+            token = new Token(MINUS, '-');
+        }else if (this.currentChar === null) {
+            token = new Token(EOF);
         }
 
-        if(currentChar === '-'){
-            token = new Token(MINUS, '-');
-        }
 
         if (typeof token === 'undefined') {
-            const errorMessage = `Interpreter recieved an unexpected input at string position ${this.index}, from character ${currentChar}`;
+            const errorMessage = `Interpreter received an unexpected input at string position ${this.index}, from character ${this.currentChar}`;
             this.handleError(new UnexpectedInput(errorMessage));
         }
 
-        this.index += 1;
 
+        this.advance();
         return token;
     }
 
@@ -83,16 +97,15 @@ class Interpreter {
 
     expression() {
         this.step();
-
         const left = this.verifyAndGetNextToken(INTEGER);
         const operator = this.verifyAndGetNextToken(PLUS, MINUS);
         const right = this.verifyAndGetNextToken(INTEGER);
 
         let result;
 
-        if(operator.type === PLUS){
+        if (operator.type === PLUS) {
             result = left.value + right.value;
-        }else{
+        } else {
             result = left.value - right.value;
         }
 
