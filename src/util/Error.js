@@ -2,7 +2,7 @@ class CustomError extends Error{
     constructor(message, type){
         super();
         this.message = message;
-        this.type = type || 'CustomError';
+        this.type = type || 'GenericError';
     }
 }
 
@@ -12,6 +12,13 @@ class UnexpectedInput extends CustomError{
     }
 }
 
+class OutOfRange extends CustomError{
+    constructor(message){
+        super(message, 'OutOfRange')
+    }
+}
+
 module.exports = {
-    UnexpectedInput
+    UnexpectedInput,
+    OutOfRange
 };

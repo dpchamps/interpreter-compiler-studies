@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1534715392816" clover="3.2.0">
+  <project timestamp="1534715392817" name="All files">
+    <metrics statements="119" coveredstatements="104" conditionals="40" coveredconditionals="34" methods="30" coveredmethods="25" elements="189" coveredelements="163" complexity="0" loc="119" ncloc="119" packages="3" files="7" classes="7">
+      <package name="arithmetic-interpreter.modules">
+        <metrics statements="85" coveredstatements="85" conditionals="33" coveredconditionals="32" methods="20" coveredmethods="20"/>
+        <file name="Interpreter.js" path="/home/dave/public_html/interpreter-compiler-studies/src/arithmetic-interpreter/modules/Interpreter.js">
+          <metrics statements="24" coveredstatements="24" conditionals="8" coveredconditionals="7" methods="7" coveredmethods="7"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="7" count="13" type="stmt"/>
+          <line num="11" count="3" type="stmt"/>
+          <line num="12" count="3" type="stmt"/>
+          <line num="16" count="34" type="cond" truecount="2" falsecount="0"/>
+          <line num="24" count="17" type="stmt"/>
+          <line num="34" count="18" type="stmt"/>
+          <line num="35" count="18" type="cond" truecount="2" falsecount="0"/>
+          <line num="36" count="15" type="stmt"/>
+          <line num="38" count="3" type="stmt"/>
+          <line num="39" count="3" type="stmt"/>
+          <line num="44" count="9" type="stmt"/>
+          <line num="46" count="9" type="stmt"/>
+          <line num="50" count="3" type="stmt"/>
+          <line num="51" count="3" type="stmt"/>
+          <line num="52" count="5" type="stmt"/>
+          <line num="53" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="54" count="2" type="stmt"/>
+          <line num="55" count="2" type="cond" truecount="1" falsecount="1"/>
+          <line num="56" count="2" type="stmt"/>
+          <line num="60" count="2" type="stmt"/>
+          <line num="64" count="1" type="stmt"/>
+        </file>
+        <file name="Lexer.js" path="/home/dave/public_html/interpreter-compiler-studies/src/arithmetic-interpreter/modules/Lexer.js">
+          <metrics statements="57" coveredstatements="57" conditionals="24" coveredconditionals="24" methods="11" coveredmethods="11"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="6" count="1" type="stmt"/>
+          <line num="10" count="143" type="stmt"/>
+          <line num="14" count="171" type="stmt"/>
+          <line num="18" count="5" type="stmt"/>
+          <line num="19" count="19" type="cond" truecount="2" falsecount="0"/>
+          <line num="20" count="5" type="stmt"/>
+          <line num="24" count="18" type="stmt"/>
+          <line num="25" count="18" type="stmt"/>
+          <line num="26" count="18" type="stmt"/>
+          <line num="27" count="18" type="stmt"/>
+          <line num="31" count="21" type="stmt"/>
+          <line num="32" count="21" type="cond" truecount="2" falsecount="0"/>
+          <line num="36" count="5" type="cond" truecount="4" falsecount="0"/>
+          <line num="37" count="2" type="stmt"/>
+          <line num="38" count="2" type="stmt"/>
+          <line num="41" count="3" type="stmt"/>
+          <line num="42" count="3" type="stmt"/>
+          <line num="46" count="35" type="stmt"/>
+          <line num="47" count="14" type="stmt"/>
+          <line num="52" count="17" type="stmt"/>
+          <line num="53" count="17" type="stmt"/>
+          <line num="54" count="27" type="stmt"/>
+          <line num="55" count="27" type="stmt"/>
+          <line num="59" count="17" type="cond" truecount="5" falsecount="0"/>
+          <line num="60" count="1" type="stmt"/>
+          <line num="61" count="1" type="stmt"/>
+          <line num="64" count="16" type="stmt"/>
+          <line num="68" count="60" type="stmt"/>
+          <line num="69" count="60" type="cond" truecount="2" falsecount="0"/>
+          <line num="73" count="5" type="stmt"/>
+          <line num="74" count="5" type="stmt"/>
+          <line num="76" count="5" type="stmt"/>
+          <line num="77" count="30" type="stmt"/>
+          <line num="79" count="30" type="stmt"/>
+          <line num="80" count="30" type="cond" truecount="2" falsecount="0"/>
+          <line num="81" count="14" type="stmt"/>
+          <line num="83" count="16" type="cond" truecount="5" falsecount="0"/>
+          <line num="85" count="5" type="stmt"/>
+          <line num="86" count="5" type="stmt"/>
+          <line num="88" count="2" type="stmt"/>
+          <line num="89" count="2" type="stmt"/>
+          <line num="91" count="2" type="stmt"/>
+          <line num="92" count="2" type="stmt"/>
+          <line num="94" count="2" type="stmt"/>
+          <line num="95" count="2" type="stmt"/>
+          <line num="97" count="3" type="stmt"/>
+          <line num="99" count="16" type="stmt"/>
+          <line num="100" count="16" type="stmt"/>
+          <line num="103" count="30" type="cond" truecount="2" falsecount="0"/>
+          <line num="104" count="2" type="stmt"/>
+          <line num="105" count="2" type="stmt"/>
+          <line num="108" count="28" type="stmt"/>
+          <line num="113" count="1" type="stmt"/>
+        </file>
+        <file name="Token.js" path="/home/dave/public_html/interpreter-compiler-studies/src/arithmetic-interpreter/modules/Token.js">
+          <metrics statements="4" coveredstatements="4" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
+          <line num="3" count="61" type="stmt"/>
+          <line num="4" count="61" type="stmt"/>
+          <line num="8" count="6" type="stmt"/>
+          <line num="12" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="arithmetic-interpreter.types">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <file name="symbols.js" path="/home/dave/public_html/interpreter-compiler-studies/src/arithmetic-interpreter/types/symbols.js">
+          <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="3" count="2" type="stmt"/>
+        </file>
+        <file name="token-types.js" path="/home/dave/public_html/interpreter-compiler-studies/src/arithmetic-interpreter/types/token-types.js">
+          <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="util">
+        <metrics statements="32" coveredstatements="17" conditionals="7" coveredconditionals="2" methods="10" coveredmethods="5"/>
+        <file name="Error.js" path="/home/dave/public_html/interpreter-compiler-studies/src/util/Error.js">
+          <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
+          <line num="3" count="8" type="stmt"/>
+          <line num="4" count="8" type="stmt"/>
+          <line num="5" count="8" type="cond" truecount="1" falsecount="1"/>
+          <line num="11" count="6" type="stmt"/>
+          <line num="17" count="2" type="stmt"/>
+          <line num="21" count="2" type="stmt"/>
+        </file>
+        <file name="Log.js" path="/home/dave/public_html/interpreter-compiler-studies/src/util/Log.js">
+          <metrics statements="26" coveredstatements="11" conditionals="5" coveredconditionals="1" methods="7" coveredmethods="2"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="3" count="2" type="stmt"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="17" count="8" type="cond" truecount="1" falsecount="4"/>
+          <line num="19" count="0" type="stmt"/>
+          <line num="20" count="0" type="stmt"/>
+          <line num="22" count="0" type="stmt"/>
+          <line num="23" count="0" type="stmt"/>
+          <line num="25" count="8" type="stmt"/>
+          <line num="26" count="8" type="stmt"/>
+          <line num="28" count="0" type="stmt"/>
+          <line num="29" count="0" type="stmt"/>
+          <line num="31" count="0" type="stmt"/>
+          <line num="32" count="0" type="stmt"/>
+          <line num="33" count="0" type="stmt"/>
+          <line num="36" count="8" type="stmt"/>
+          <line num="40" count="0" type="stmt"/>
+          <line num="44" count="8" type="stmt"/>
+          <line num="48" count="0" type="stmt"/>
+          <line num="52" count="0" type="stmt"/>
+          <line num="56" count="0" type="stmt"/>
+          <line num="60" count="0" type="stmt"/>
+          <line num="61" count="0" type="stmt"/>
+          <line num="66" count="2" type="stmt"/>
+        </file>
+      </package>
+    </metrics>
+  </project>
+</coverage>

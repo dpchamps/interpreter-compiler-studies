@@ -1,112 +1,59 @@
-const log = require('../../util/Log');
+"use strict";
 const {UnexpectedInput} = require('../../util/Error');
-const {INTEGER, PLUS, MINUS, MULTIPLY, DIVIDE, EOF} = require('../types/token-types');
-const SYMBOL = require('../types/symbols');
-const Token = require('./Token');
-
+const log = require('../../util/Log');
+const {INTEGER, PLUS, MINUS, MULTIPLY, DIVIDE, EOF, VOID} = require('../types/token-types');
 class Interpreter {
-    constructor(input) {
-        this.input = input;
-        this.index = 0;
-        this.currentToken = null;
-        this.currentChar = this.input[this.index];
+    constructor(tokens) {
+        this.tokens = tokens;
     }
 
-    _isWhiteSpace(str) {
-        return (/\s/.exec(str)) !== null;
+    error(e) {
+        log.ERROR(`The Interpreter encountered a fatal exception: ${e.type} @ token ${this.currentToken}`);
+        throw e;
     }
 
-    _isNumber(str) {
-        return /[0-9]/.exec(str) !== null;
+    get currentToken() {
+        return this.tokens[0] || null;
     }
 
-    handleError(error) {
-        log.ERROR(`Encoutered a fatal error: ${error.type || 'ERROR'}\n\t${error.message}`);
-        throw error;
+    /**
+     * Shift tokens, return the removed token
+     * @returns {Token}
+     */
+    shiftTokenQueue() {
+        return this.tokens.shift();
     }
 
-    advance() {
-        this.index += 1;
-        if (this.index > this.input.length - 1) {
-            this.currentChar = null;
-        } else {
-            this.currentChar = this.input[this.index];
-        }
-    }
-
-    skipWhitespace() {
-        while (this._isWhiteSpace(this.currentChar)) {
-            this.advance();
-        }
-    }
-
-    getInteger() {
-        let buffer = "";
-        while (this.currentChar !== null && this._isNumber(this.currentChar)) {
-            buffer += this.currentChar;
-            this.advance();
-        }
-        return Number(buffer);
-    }
-
-    getNextToken() {
-        let token;
-
-        this.skipWhitespace();
-
-        if (this._isNumber(this.currentChar)) {
-            token = new Token(INTEGER, this.getInteger());
-        }else if (this.currentChar === SYMBOL.MULTIPLY) {
-            token = new Token(MULTIPLY, SYMBOL.MULTIPLY);
-            this.advance();
-        }else if (this.currentChar === SYMBOL.DIVIDE) {
-            token = new Token(DIVIDE, SYMBOL.DIVIDE);
-            this.advance();
-        }else if (this.currentChar === null) {
-            token = new Token(EOF);
-            this.advance();
-        }
-
-        if (typeof token === 'undefined') {
-            const errorMessage = `Interpreter received an unexpected input at string position ${this.index}, from character ${this.currentChar}`;
-            this.handleError(new UnexpectedInput(errorMessage));
-        }
-
-
-        return token;
-    }
-
-    step() {
-        this.currentToken = this.getNextToken();
-    }
-
-    verifyAndGetNextToken(tokenType, ...validTokens) {
-        validTokens.push(tokenType);
-        const previousToken = this.currentToken;
+    /**
+     * Verify the current token, and shift the queue by one.
+     * @param validToken
+     * @param validTokens
+     * @returns {Token} - the verified token
+     */
+    verifyAndShift(validToken, ...validTokens) {
+        validTokens.push(validToken);
         if (validTokens.includes(this.currentToken.type)) {
-            this.step();
+            return this.shiftTokenQueue();
         } else {
-            this.handleError(new UnexpectedInput(`Recieved an unexpected token. Got: ${this.currentToken.type}, expected ${validTokens.toString()}`));
+            const error = new UnexpectedInput(`Expected one of the following tokens: ${validTokens.join(',')}, but got ${this.currentToken}`);
+            this.error(error);
         }
-
-        return previousToken;
     }
 
     term(){
-        const token = this.verifyAndGetNextToken(INTEGER);
+        const token = this.verifyAndShift(INTEGER);
+
         return token.value;
     }
 
-    expression() {
-        this.step();
-
+    expression(){
         let result = this.term();
-        while (this.currentToken.type !== EOF){
-            const token = this.verifyAndGetNextToken(MULTIPLY, DIVIDE);
-            if(token.type === MULTIPLY){
-                result *= this.term();
-            }else if(token.type === DIVIDE){
-                result /= this.term();
+        while(this.currentToken.type !== EOF){
+            const operator = this.verifyAndShift(PLUS, MINUS);
+            if(operator.type === PLUS){
+                result += this.term();
+            }else if(operator.type === MINUS){
+                result -= this.term();
             }
         }
 

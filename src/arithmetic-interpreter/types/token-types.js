@@ -4,5 +4,6 @@ module.exports = {
     MINUS : 'MINUS',
     MULTIPLY : 'MULTIPLY',
     DIVIDE : 'DIVIDE',
-    EOF : 'EOF'
+    EOF : 'EOF',
+    VOID : 'VOID'
 };
