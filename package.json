@@ -6,8 +6,7 @@
   "scripts": {
     "test": "jest --coverage",
     "dev": " node build/server.js",
-    "build": "NODE_ENV=production webpack --config build/webpack.config.js",
-    "postinstall": "node install.js"
+    "build": "NODE_ENV=production webpack --config build/webpack.config.js"
   },
   "author": "Dave Campion",
   "license": "MIT",

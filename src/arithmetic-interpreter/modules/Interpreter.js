@@ -12,11 +12,11 @@ class Interpreter {
     }
 
     _isWhiteSpace(str) {
-        return /\s/.exec(str) !== null;
+        return (/\s/.exec(str)) !== null;
     }
 
     _isNumber(str) {
-        return !isNaN(Number(str));
+        return /[0-9]/.exec(str) !== null;
     }
 
     handleError(error) {
@@ -33,10 +33,6 @@ class Interpreter {
         }
     }
 
-    peek(){
-        return (this.index+1 < this.input.length-1) ? this.input[this.index+1] : null;
-    }
-
     skipWhitespace() {
         while (this._isWhiteSpace(this.currentChar)) {
             this.advance();
@@ -44,12 +40,11 @@ class Interpreter {
     }
 
     getInteger() {
-        let buffer = '';
-        while (this.currentChar !== null && this._isNumber(this.peek())) {
+        let buffer = "";
+        while (this.currentChar !== null && this._isNumber(this.currentChar)) {
             buffer += this.currentChar;
             this.advance();
         }
-
         return Number(buffer);
     }
 
@@ -62,12 +57,14 @@ class Interpreter {
             token = new Token(INTEGER, this.getInteger());
         }else if (this.currentChar === '+') {
             token = new Token(PLUS, '+');
+            this.advance();
         }else if (this.currentChar === '-') {
             token = new Token(MINUS, '-');
+            this.advance();
         }else if (this.currentChar === null) {
             token = new Token(EOF);
+            this.advance();
         }
-
 
         if (typeof token === 'undefined') {
             const errorMessage = `Interpreter received an unexpected input at string position ${this.index}, from character ${this.currentChar}`;
@@ -75,7 +72,6 @@ class Interpreter {
         }
 
 
-        this.advance();
         return token;
     }
 
@@ -95,21 +91,25 @@ class Interpreter {
         return previousToken;
     }
 
+    term(){
+        const token = this.verifyAndGetNextToken(INTEGER);
+        return token.value;
+    }
+
     expression() {
         this.step();
-        const left = this.verifyAndGetNextToken(INTEGER);
-        const operator = this.verifyAndGetNextToken(PLUS, MINUS);
-        const right = this.verifyAndGetNextToken(INTEGER);
 
-        let result;
-
-        if (operator.type === PLUS) {
-            result = left.value + right.value;
-        } else {
-            result = left.value - right.value;
+        let result = this.term();
+        while (this.currentToken.type !== EOF){
+            const token = this.verifyAndGetNextToken(PLUS, MINUS);
+            if(token.type === PLUS){
+                result += this.term();
+            }else if(token.type === MINUS){
+                result -= this.term();
+            }
         }
 
-        return result
+        return result;
     }
 }
 

@@ -7,9 +7,14 @@ const Interpreter = require('./modules/Interpreter');
     const {expression} = getArgs('expression');
     log.INFO(`Recieved the following expression: ${expression}`);
 
-    const interpreter = new Interpreter(expression);
-    const result = interpreter.expression();
+    try{
+        const interpreter = new Interpreter(expression);
+        const result = interpreter.expression();
+        log.INFO(`The result is: ${result}`);
+    }catch(e){
+        log.ERROR('Caught a fatal error, exiting...');
+    }
 
-    log.INFO(`The result is: ${result}`);
+
     process.exit();
 })();
