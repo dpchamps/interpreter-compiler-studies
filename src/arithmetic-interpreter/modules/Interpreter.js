@@ -1,6 +1,6 @@
 const log = require('../../util/Log');
 const {UnexpectedInput} = require('../../util/Error');
-const {INTEGER, PLUS, MINUS, EOF} = require('../types/token-types');
+const {INTEGER, PLUS, MINUS, MULTIPLY, DIVIDE, EOF} = require('../types/token-types');
 const Token = require('./Token');
 
 class Interpreter {
@@ -55,11 +55,11 @@ class Interpreter {
 
         if (this._isNumber(this.currentChar)) {
             token = new Token(INTEGER, this.getInteger());
-        }else if (this.currentChar === '+') {
-            token = new Token(PLUS, '+');
+        }else if (this.currentChar === '*') {
+            token = new Token(MULTIPLY, '*');
             this.advance();
-        }else if (this.currentChar === '-') {
-            token = new Token(MINUS, '-');
+        }else if (this.currentChar === '/') {
+            token = new Token(DIVIDE, '/');
             this.advance();
         }else if (this.currentChar === null) {
             token = new Token(EOF);
@@ -101,11 +101,11 @@ class Interpreter {
 
         let result = this.term();
         while (this.currentToken.type !== EOF){
-            const token = this.verifyAndGetNextToken(PLUS, MINUS);
-            if(token.type === PLUS){
-                result += this.term();
-            }else if(token.type === MINUS){
-                result -= this.term();
+            const token = this.verifyAndGetNextToken(MULTIPLY, DIVIDE);
+            if(token.type === MULTIPLY){
+                result *= this.term();
+            }else if(token.type === DIVIDE){
+                result /= this.term();
             }
         }
 
