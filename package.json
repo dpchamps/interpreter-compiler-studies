@@ -4,7 +4,7 @@
   "description": "Studies in crafting interpreters and compilers",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --silent",
     "dev": " node build/server.js",
     "build": "NODE_ENV=production webpack --config build/webpack.config.js"
   },
