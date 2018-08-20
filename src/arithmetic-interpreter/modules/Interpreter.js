@@ -2,9 +2,18 @@
 const {UnexpectedInput} = require('../../util/Error');
 const log = require('../../util/Log');
 const {INTEGER, PLUS, MINUS, MULTIPLY, DIVIDE, EOF, VOID} = require('../types/token-types');
+const Lexer = require('./Lexer');
 class Interpreter {
-    constructor(tokens) {
-        this.tokens = tokens;
+    constructor(input) {
+        if(typeof input === 'string'){
+            this.lexer = new Lexer(input);
+            this.lexer.initialize();
+            this.tokens = [this.lexer.getNextToken()];
+        }else if(Array.isArray(input)){
+            this.tokens = input;
+        }else{
+            this.error(UnexpectedInput(`Interpreter input should be an array of tokens, or a string. Got: ${typeof input}`));
+        }
     }
 
     error(e) {
@@ -21,6 +30,9 @@ class Interpreter {
      * @returns {Token}
      */
     shiftTokenQueue() {
+        if(this.lexer){
+            this.tokens.push(this.lexer.getNextToken());
+        }
         return this.tokens.shift();
     }
 

@@ -8,10 +8,7 @@ const Lexer = require('./modules/Lexer');
     log.INFO(`Recieved the following expression: ${expression}`);
 
     try{
-        const lexer = new Lexer(expression);
-        lexer.tokenize();
-        log.INFO(`Got the following tokens: ${lexer.tokens}`);
-        const interpreter = new Interpreter(lexer.tokens);
+        const interpreter = new Interpreter(expression);
         const result = interpreter.expression();
         log.INFO(`The result is: ${result}`);
     }catch(e){
