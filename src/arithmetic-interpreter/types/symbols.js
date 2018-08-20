@@ -4,5 +4,7 @@ module.exports = {
     ADD : '+',
     SUBTRACT : '-',
     MULTIPLY : '*',
-    DIVIDE : '/'
+    DIVIDE : '/',
+    LPAREN : '(',
+    RPAREN : ')'
 };

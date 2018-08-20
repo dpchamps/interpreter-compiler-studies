@@ -256,7 +256,7 @@ class Interpreter {
         return token.value;
     }
 &nbsp;
-    expression(){
+    evaluate(){
         let result = this.term();
         while(this.currentToken.type !== EOF){
             const operator = this.verifyAndShift(PLUS, MINUS);

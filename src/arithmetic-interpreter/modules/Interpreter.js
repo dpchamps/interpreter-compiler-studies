@@ -1,7 +1,8 @@
 "use strict";
 const {UnexpectedInput} = require('../../util/Error');
 const log = require('../../util/Log');
-const {INTEGER, PLUS, MINUS, MULTIPLY, DIVIDE, EOF, VOID} = require('../types/token-types');
+const {INTEGER, PLUS, MINUS, MULTIPLY, DIVIDE, EOF, VOID, LPAREN, RPAREN} = require('../types/token-types');
+const Symbol = require('../types/symbols');
 const Lexer = require('./Lexer');
 class Interpreter {
     constructor(input) {
@@ -52,24 +53,47 @@ class Interpreter {
         }
     }
 
-    term(){
-        const token = this.verifyAndShift(INTEGER);
+    factor(){
+        let token = this.verifyAndShift(INTEGER, LPAREN);
+        let result = token.value;
 
-        return token.value;
+        if(token.type === LPAREN){
+            result = this.evaluate();
+            this.verifyAndShift(RPAREN);
+        }
+
+        return result;
     }
 
-    expression(){
-        let result = this.term();
-        while(this.currentToken.type !== EOF){
+    multDivide(){
+        let result = this.factor();
+        while([MULTIPLY, DIVIDE].includes(this.currentToken.type)){
+            const operator = this.verifyAndShift(MULTIPLY, DIVIDE);
+            if(operator.type === MULTIPLY){
+                result *= this.factor();
+            }else if(operator.type === DIVIDE){
+                result /= this.factor();
+            }
+        }
+        return result;
+    }
+
+    addSubtract(){
+        let result = this.multDivide();
+        while([PLUS, MINUS].includes(this.currentToken.type)){
             const operator = this.verifyAndShift(PLUS, MINUS);
             if(operator.type === PLUS){
-                result += this.term();
+                result += this.multDivide();
             }else if(operator.type === MINUS){
-                result -= this.term();
+                result -= this.multDivide();
             }
         }
 
         return result;
+    }
+
+    evaluate(){
+        return this.addSubtract();
     }
 }
 

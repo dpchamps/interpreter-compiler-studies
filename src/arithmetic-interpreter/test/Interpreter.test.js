@@ -67,12 +67,12 @@ describe('Interpreter', () => {
         });
 
         it('Should verify that the current token in an integer', () => {
-            interpreter.term();
+            interpreter.factor();
             expect(verifyAndShiftSpy).toHaveBeenLastCalledWith(INTEGER);
         });
 
         it('Should return the verified token\'s value', () => {
-            expect(interpreter.term()).toBe(9);
+            expect(interpreter.factor()).toBe(9);
         });
 
     });
@@ -81,18 +81,18 @@ describe('Interpreter', () => {
         it('Should parse an array of tokens with a valid simple structure', () => {
             interpreter.tokens = [new Token(INTEGER, 2),new Token(PLUS, SYMBOL.ADD), new Token(INTEGER, 2), new Token(EOF)];
 
-            expect(interpreter.expression()).toBe(4);
+            expect(interpreter.evaluate()).toBe(4);
         });
 
         it('Should parse an array of tokens with a valid complex structure', () => {
             interpreter.tokens = [new Token(INTEGER, 2),new Token(PLUS, SYMBOL.ADD), new Token(INTEGER, 2), new Token(MINUS, SYMBOL.SUBTRACT), new Token(INTEGER, '2'), new Token(MINUS, SYMBOL.SUBTRACT), new Token(INTEGER, 4) , new Token(EOF)];
 
-            expect(interpreter.expression()).toBe(-2);
+            expect(interpreter.evaluate()).toBe(-2);
         });
 
         it('Should raise an exception on parsing an array of tokens with an invalid structure', () => {
             interpreter.tokens = [new Token(INTEGER, 2),new Token(INTEGER, 2), new Token(EOF), new Token(PLUS, SYMBOL.ADD)];
-            const fn = () => interpreter.expression();
+            const fn = () => interpreter.evaluate();
 
             expect(fn).toThrowError(UnexpectedInput)
         })

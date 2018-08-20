@@ -1,5 +1,5 @@
 "use strict";
-const {INTEGER, PLUS, MINUS, MULTIPLY, DIVIDE, EOF, VOID} = require('../types/token-types');
+const {INTEGER, PLUS, MINUS, MULTIPLY, DIVIDE, EOF, VOID, LPAREN, RPAREN} = require('../types/token-types');
 const SYMBOL = require('../types/symbols');
 const Token = require('./Token');
 const {UnexpectedInput, OutOfRange} = require('../../util/Error');
@@ -106,6 +106,12 @@ class Lexer {
                     break;
                 case SYMBOL.DIVIDE:
                     token = new Token(DIVIDE, '/');
+                    break;
+                case SYMBOL.RPAREN:
+                    token = new Token(RPAREN, SYMBOL.RPAREN);
+                    break;
+                case SYMBOL.LPAREN:
+                    token = new Token(LPAREN, SYMBOL.LPAREN);
                     break;
                 case null:
                     token = new Token(EOF);

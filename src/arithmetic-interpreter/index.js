@@ -9,7 +9,7 @@ const Lexer = require('./modules/Lexer');
 
     try{
         const interpreter = new Interpreter(expression);
-        const result = interpreter.expression();
+        const result = interpreter.evaluate();
         log.INFO(`The result is: ${result}`);
     }catch(e){
         log.ERROR(`Caught a fatal error ${e} exiting...`);
