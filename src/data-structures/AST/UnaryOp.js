@@ -9,7 +9,7 @@ const AST = require('./AST');
  *     (-)             (2)
  *
  */
-class UnaryOp extends AST{
+class UnaryOpNode extends AST{
     /**
      * Create a UnaryOp Node
      *
@@ -21,3 +21,5 @@ class UnaryOp extends AST{
         this.node = node;
     }
 }
+
+module.exports = UnaryOpNode;

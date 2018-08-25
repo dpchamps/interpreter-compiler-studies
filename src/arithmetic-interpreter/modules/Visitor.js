@@ -10,9 +10,11 @@ class Visitor {
     }
 
     visit(node) {
-        const method_name = node.constructor;
-        const visitor = this[method_name] || this._defaultVisit;
+        const method_name = `visit_${node.constructor.name}`;
+        const visitor = this[method_name].bind(this) || this._defaultVisit(method_name);
 
         return visitor(node);
     }
 }
+
+module.exports = Visitor;

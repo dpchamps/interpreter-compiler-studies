@@ -3,7 +3,7 @@ const AST = require('./AST');
 /**
  * A Binary Operation AST Node
  */
-class BinaryOp extends AST{
+class BinaryOpNode extends AST{
     /**
      * Create a Binary Operation Node
      *
@@ -13,9 +13,10 @@ class BinaryOp extends AST{
      */
     constructor(left, token, right){
         super(token);
+        this.operation = token.type;
         this.left = left;
         this.right = right;
     }
 }
 
-module.exports = BinaryOp;
+module.exports = BinaryOpNode;

@@ -1,9 +1,5 @@
-const BinaryOp = require('./BinaryOp');
-const Number = require('./Number');
-const UnaryOp = require('./UnaryOp');
-const Visitor = require('./Visitor');
+const BinaryOpNode = require('./BinaryOp');
+const NumberNode = require('./Number');
+const UnaryOpNode = require('./UnaryOp');
 
-module.exports = {
-    Node : {BinaryOp, Number, UnaryOp},
-    Visitor
-};
+module.exports = {BinaryOpNode, NumberNode, UnaryOpNode};

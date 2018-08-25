@@ -3,7 +3,7 @@ const AST = require('./AST');
 /**
  * A Number AST Node
  */
-class Number extends AST {
+class NumberNode extends AST {
     /**
      * Create a Number Node
      * @param token - Token Representing the Number
@@ -14,4 +14,4 @@ class Number extends AST {
     }
 }
 
-module.exports = Number;
+module.exports = NumberNode;

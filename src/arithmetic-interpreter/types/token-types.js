@@ -1,11 +1,11 @@
 module.exports = {
     INTEGER : 'INTEGER',
-    PLUS : 'PLUS',
-    MINUS : 'MINUS',
-    MULTIPLY : 'MULTIPLY',
-    DIVIDE : 'DIVIDE',
+    PLUS : '+',
+    MINUS : '-',
+    MULTIPLY : '*',
+    DIVIDE : '/',
     EOF : 'EOF',
     VOID : 'VOID',
-    LPAREN : 'LPAREN',
-    RPAREN : 'RPAREN'
+    LPAREN : '(',
+    RPAREN : ')'
 };
