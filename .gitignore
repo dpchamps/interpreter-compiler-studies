@@ -15,3 +15,5 @@ nbdist/
 
 node_modules
 *.log
+
+coverage/lcov-report
