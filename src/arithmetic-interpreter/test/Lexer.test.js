@@ -1,6 +1,6 @@
 "use strict";
 const Lexer = require('../modules/Lexer');
-const {INTEGER, PLUS, MINUS, MULTIPLY, DIVIDE, EOF, VOID} = require('../types/token-types');
+const {INTEGER, PLUS, MINUS, MULTIPLY, LPAREN, RPAREN, DIVIDE, EOF, VOID} = require('../types/token-types');
 const SYMBOL = require('../types/symbols');
 const Token = require('../modules/Token');
 const {UnexpectedInput, OutOfRange} = require('../../util/Error');
@@ -159,14 +159,6 @@ describe('Lexer', () => {
         });
 
         describe('tokenize', () => {
-            // const tokens = {
-            //     EOF: new Token(EOF),
-            //     PLUS: new Token(PLUS, SYMBOL.ADD),
-            //     MINUS: new Token(MINUS, SYMBOL.SUBTRACT),
-            //     MULTIPLY: new Token(MULTIPLY, SYMBOL.MULTIPLY),
-            //     DIVIDE: new Token(DIVIDE, SYMBOL.DIVIDE),
-            //     INTEGER : new Token(INTEGER)
-            // };
             it('Should handle an empty string', () => {
                 lexer.stringBuffer = '';
                 lexer.initialize();
@@ -184,11 +176,11 @@ describe('Lexer', () => {
             });
 
             it('Should tokenize complex expressions', () => {
-                lexer.stringBuffer = "1+2+3/4*5*6/7-8-9";
+                lexer.stringBuffer = "(1+2+3)/4*5*6/7-8-9";
                 lexer.initialize();
                 lexer.tokenize();
                 const tokenTypes = lexer.tokens.map(x => x.type);
-                expect(tokenTypes).toEqual([INTEGER, PLUS, INTEGER, PLUS, INTEGER, DIVIDE, INTEGER, MULTIPLY, INTEGER, MULTIPLY, INTEGER, DIVIDE, INTEGER, MINUS, INTEGER, MINUS, INTEGER, EOF]);
+                expect(tokenTypes).toEqual([LPAREN, INTEGER, PLUS, INTEGER, PLUS, INTEGER, RPAREN, DIVIDE, INTEGER, MULTIPLY, INTEGER, MULTIPLY, INTEGER, DIVIDE, INTEGER, MINUS, INTEGER, MINUS, INTEGER, EOF]);
             });
 
             it('Should throw an error on unexpected characters', () => {
@@ -200,7 +192,9 @@ describe('Lexer', () => {
             it('Should throw an error on unexpexted characters in otherwise valid inputs', () => {
                 lexer.stringBuffer = "2+2^";
                 lexer.initialize();
-                expect(()=> lexer.tokenize()).toThrowError(UnexpectedInput);
+                lexer.error = jest.fn();
+                lexer.tokenize();
+                expect(lexer.error).toHaveBeenCalled();
             })
         })
 

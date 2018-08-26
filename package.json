@@ -4,7 +4,7 @@
   "description": "Studies in crafting interpreters and compilers",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest --coverage --silent",
+    "test": "jest --coverage --silent && jest-coverage-badges",
     "dev": " node build/server.js",
     "build": "NODE_ENV=production webpack --config build/webpack.config.js"
   },
@@ -30,6 +30,14 @@
     "webpack-hot-middleware": "^2.22.3"
   },
   "dependencies": {
-    "chalk": "^2.4.1"
+    "chalk": "^2.4.1",
+    "jest-coverage-badges": "^1.0.0"
+  },
+  "jest": {
+    "coverageReporters": [
+      "json-summary",
+      "text",
+      "lcov"
+    ]
   }
 }

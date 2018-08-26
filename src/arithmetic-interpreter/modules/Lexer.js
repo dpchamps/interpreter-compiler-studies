@@ -141,7 +141,7 @@ class Lexer {
 
             if(token === null){
                 const error = new UnexpectedInput(`Invalid input ${this.currentChar}`);
-                this.error(error);
+                return this.error(error);
             }
             lastToken = token;
 
