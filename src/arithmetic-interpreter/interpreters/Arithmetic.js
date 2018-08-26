@@ -2,7 +2,7 @@ const Visitor = require('../modules/Visitor');
 const Lexer = require('../modules/Lexer');
 const Parser = require('../modules/Parser');
 const TokenType = require('../types/token-types');
-
+const Token = require('../modules/Token');
 /**
  * Node Visitor to convert an AST into a value
  */
@@ -26,8 +26,14 @@ class Arithmetic extends Visitor {
         }
     }
 
-    visit_UnaryOpNode() {
+    visit_UnaryOpNode(node) {
+        const {token} = node;
 
+        if(token.is(TokenType.PLUS)){
+            return +this.visit(node.childNode);
+        }else if(token.is(TokenType.MINUS)){
+            return -this.visit(node.childNode);
+        }
     }
 
     visit_NumberNode(node) {

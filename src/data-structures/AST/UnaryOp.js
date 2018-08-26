@@ -18,7 +18,8 @@ class UnaryOpNode extends AST{
      */
     constructor(token, node){
         super(token);
-        this.node = node;
+        this.operation = token.type;
+        this.childNode = node;
     }
 }
 

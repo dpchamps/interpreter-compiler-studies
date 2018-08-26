@@ -30,15 +30,25 @@ class Parser{
     }
 
     factor(){
-        const token = this.eat(TokenType.INTEGER, TokenType.LPAREN);
-        let result = new NumberNode(token);
+        const token = this.eat(TokenType.INTEGER, TokenType.LPAREN, TokenType.PLUS, TokenType.MINUS);
+        let node;
 
-        if(token.type === TokenType.LPAREN){
-            result = this.evaluate();
-            this.eat(TokenType.RPAREN);
+        switch(token.type){
+            case TokenType.PLUS:
+                node = new UnaryOpNode(token, this.factor());
+                break;
+            case TokenType.MINUS:
+                node = new UnaryOpNode(token, this.factor());
+                break;
+            case TokenType.INTEGER:
+                node = new NumberNode(token);
+                break;
+            case TokenType.LPAREN:
+                node = this.evaluate();
+                this.eat(TokenType.RPAREN)
         }
 
-        return result;
+        return node;
     }
 
     term(){
